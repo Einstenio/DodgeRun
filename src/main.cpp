@@ -19,6 +19,7 @@
 #include "gl_utils.h"
 #include "tools.h"
 #include "malla.h"
+#include "GLDebugDrawer.hpp"
 
 //Constantes
 
@@ -70,10 +71,10 @@ int main(){
 	glFrontFace (GL_CCW);
 	glClearColor (0.2, 0.2, 0.2, 1.0);
 	glViewport (0, 0, g_gl_width, g_gl_height);
-    glfwSetFramebufferSizeCallback(g_window, framebuffer_size_callback);
-    glfwSetCursorPosCallback(g_window, mouse_callback);
-    glfwSetScrollCallback(g_window, scroll_callback);
-    glfwSetInputMode(g_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetFramebufferSizeCallback(g_window, framebuffer_size_callback);
+	glfwSetCursorPosCallback(g_window, mouse_callback);
+	glfwSetScrollCallback(g_window, scroll_callback);
+	glfwSetInputMode(g_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	//Creación de Shaders
 
@@ -101,6 +102,14 @@ int main(){
 	btDiscreteDynamicsWorld* dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
 	dynamicsWorld->setGravity(btVector3(0, -10, 0)); //Gravedad
 
+	//Depuración
+
+	GLDebugDrawer* debug = new GLDebugDrawer();
+	debug->setDebugMode(btIDebugDraw::DBG_DrawWireframe );
+	debug->setView(&view);
+	debug->setProj(&projection);
+	dynamicsWorld->setDebugDrawer(debug);
+
 	//Creación de Figuras
 
 	malla *ball = new malla((char*)"mallas/test/ball.obj");
@@ -110,10 +119,10 @@ int main(){
 
 	//Pelota
 
-	btCollisionShape* ballShape = new btSphereShape(btScalar(1.)); // 1 de r
+	btCollisionShape* ballShape = new btSphereShape(btScalar(1)); // Radio de Esfera
 	btTransform ballTransform;
 	ballTransform.setIdentity();
-	ballTransform.setOrigin(btVector3(0, 5, -2)); // Posicion incial
+	ballTransform.setOrigin(btVector3(0, 20, 1)); // Posicion incial
 	btScalar ballMass(10.); // Masa
 	bool isDynamicBall = (ballMass != 0.f);
 	btVector3 localInertiaBall(1, 0, 0);
@@ -122,13 +131,13 @@ int main(){
 	btDefaultMotionState* ballMotionState = new btDefaultMotionState(ballTransform);
 	btRigidBody::btRigidBodyConstructionInfo ballRbInfo(ballMass, ballMotionState, ballShape, localInertiaBall);
 	btRigidBody* bodyBall = new btRigidBody(ballRbInfo);
-    bodyBall->setActivationState(DISABLE_DEACTIVATION);
+  	bodyBall->setActivationState(DISABLE_DEACTIVATION);
 
-    dynamicsWorld->addRigidBody(bodyBall);
+	dynamicsWorld->addRigidBody(bodyBall);
 
 	//Piso
 
-	btCollisionShape* groundShape = new btBoxShape(btVector3(btScalar(0.1), btScalar(0.1), btScalar(0.1))); // 0.1 de l/a/a
+	btCollisionShape* groundShape = new btBoxShape(btVector3(btScalar(5.), btScalar(.1), btScalar(5))); // Tamaño de Piso
 	btTransform pisoTransform;
 	pisoTransform.setIdentity();
 	pisoTransform.setOrigin(btVector3(0, -3, -2)); // Posicion incial
@@ -183,6 +192,13 @@ int main(){
 		piso->setModelMatrix(aux);
 		piso->draw(model_mat_location);
 
+		//Depuración
+
+		debug->setView(&view);
+		debug->setProj(&projection);
+		dynamicsWorld->debugDrawWorld();
+		debug->drawLines();
+
 		//Otros
 
         glfwSwapBuffers(g_window);
@@ -198,9 +214,7 @@ int main(){
 //Métodos
 
 void processInput(GLFWwindow *window){
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
     float cameraSpeed = 2.5 * deltaTime;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         cameraPos += cameraSpeed * cameraFront;
