@@ -122,3 +122,37 @@ bool load_mesh (const char* file_name, GLuint* vao, int* point_count) {
 	
 	return true;
 }
+
+btCollisionShape* load_mesh_point (const char* file_name) {
+	const aiScene* scene = aiImportFile(file_name, aiProcess_Triangulate);
+	btCollisionShape *_shape = NULL;
+	if (!scene) {
+		fprintf (stderr, "ERROR: reading mesh %s\n", file_name);
+		return false;
+	}
+	/* get first mesh in file only */
+	const aiMesh* mesh = scene->mMeshes[0];
+	printf ("    %i vertices in mesh[0]\n", mesh->mNumVertices);
+	
+	/* pass back number of vertex points in mesh */
+	int point_count = mesh->mNumVertices;
+	btTriangleMesh* meshTriangle = new btTriangleMesh();
+	if (mesh->HasPositions ()) {
+		for (int i = 0; i < point_count; i+=3) {
+			const aiVector3D* vp = &(mesh->mVertices[i]);
+			const aiVector3D* vp1 = &(mesh->mVertices[i+1]);
+			const aiVector3D* vp2 = &(mesh->mVertices[i+2]);
+
+            btVector3 bv1 = btVector3(vp->x, vp->y, vp->z);
+            btVector3 bv2 = btVector3(vp1->x, vp1->y, vp1->z);
+            btVector3 bv3 = btVector3(vp2->x, vp2->y, vp2->z);
+
+            meshTriangle->addTriangle(bv1, bv2, bv3);     
+		}
+		_shape = new btBvhTriangleMeshShape(meshTriangle, true);
+	}
+	
+	aiReleaseImport (scene);
+	
+	return _shape;
+}
