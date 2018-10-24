@@ -112,14 +112,14 @@ int main(){
 
 	//Creación de Figuras
 
-	malla *ball = new malla((char*)"mallas/test/ball.obj");
-	malla *piso = new malla((char*)"mallas/test/piso.obj");
+	malla *ball = new malla((char*)"mallas/box/box.obj");
+	malla *piso = new malla((char*)"mallas/highway/highway.obj");
 
 	//Creación de Cuerpos
 
 	//Pelota
 
-	btCollisionShape* ballShape = new btSphereShape(btScalar(1)); // Radio de Esfera
+	btCollisionShape* ballShape = new btBoxShape(btVector3(1, 1, 1)); // Radio de Esfera
 	btTransform ballTransform;
 	ballTransform.setIdentity();
 	ballTransform.setOrigin(btVector3(0, 20, 1)); // Posicion incial
@@ -137,7 +137,8 @@ int main(){
 
 	//Piso
 
-	btCollisionShape* groundShape = new btBoxShape(btVector3(btScalar(5.), btScalar(.1), btScalar(5))); // Tamaño de Piso
+	btCollisionShape* groundShape; // Tamaño de Piso
+	groundShape = load_mesh_point((char*)"mallas/highway/highway.obj");
 	btTransform pisoTransform;
 	pisoTransform.setIdentity();
 	pisoTransform.setOrigin(btVector3(0, -3, -2)); // Posicion incial
