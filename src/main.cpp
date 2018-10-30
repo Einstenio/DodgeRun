@@ -40,6 +40,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
+void init();
 
 //Opciones Sobre la Cámara
 
@@ -63,19 +64,7 @@ int main(){
 
 	//Variables Previas para Ejecucación
 
-	restart_gl_log ();
-	start_gl ();
-	glEnable (GL_DEPTH_TEST);
-	glDepthFunc (GL_LESS);
-	glEnable (GL_CULL_FACE);
-	glCullFace (GL_BACK);
-	glFrontFace (GL_CCW);
-	glClearColor (0.2, 0.2, 0.2, 1.0);
-	glViewport (0, 0, g_gl_width, g_gl_height);
-	glfwSetFramebufferSizeCallback(g_window, framebuffer_size_callback);
-	glfwSetCursorPosCallback(g_window, mouse_callback);
-	glfwSetScrollCallback(g_window, scroll_callback);
-	glfwSetInputMode(g_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	init();
 
 	//Creación de Shaders
 
@@ -206,6 +195,22 @@ int main(){
 }
 
 //Métodos
+
+void init(){
+	restart_gl_log ();
+	start_gl ();
+	glEnable (GL_DEPTH_TEST);
+	glDepthFunc (GL_LESS);
+	glEnable (GL_CULL_FACE);
+	glCullFace (GL_BACK);
+	glFrontFace (GL_CCW);
+	glClearColor (0.2, 0.2, 0.2, 1.0);
+	glViewport (0, 0, g_gl_width, g_gl_height);
+	glfwSetFramebufferSizeCallback(g_window, framebuffer_size_callback);
+	glfwSetCursorPosCallback(g_window, mouse_callback);
+	glfwSetScrollCallback(g_window, scroll_callback);
+	glfwSetInputMode(g_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+}
 
 void processInput(GLFWwindow *window){
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
