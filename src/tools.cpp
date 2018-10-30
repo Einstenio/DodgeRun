@@ -23,19 +23,19 @@ bool load_mesh (const char* file_name, GLuint* vao, int* point_count) {
 	printf ("  %i materials\n", scene->mNumMaterials);
 	printf ("  %i meshes\n", scene->mNumMeshes);
 	printf ("  %i textures\n", scene->mNumTextures);
-	
+
 	/* get first mesh in file only */
 	const aiMesh* mesh = scene->mMeshes[0];
 	printf ("    %i vertices in mesh[0]\n", mesh->mNumVertices);
-	
+
 	/* pass back number of vertex points in mesh */
 	*point_count = mesh->mNumVertices;
-	
+
 	/* generate a VAO, using the pass-by-reference parameter that we give to the
 	function */
 	glGenVertexArrays (1, vao);
 	glBindVertexArray (*vao);
-	
+
 	/* we really need to copy out all the data from AssImp's funny little data
 	structures into pure contiguous arrays before we copy it into data buffers
 	because assimp's texture coordinates are not really contiguous in memory.
@@ -69,7 +69,7 @@ bool load_mesh (const char* file_name, GLuint* vao, int* point_count) {
 			texcoords[i * 2 + 1] = (GLfloat)vt->y;
 		}
 	}
-	
+
 	/* copy mesh data into VBOs */
 	if (mesh->HasPositions ()) {
 		GLuint vbo;
@@ -116,10 +116,10 @@ bool load_mesh (const char* file_name, GLuint* vao, int* point_count) {
 	if (mesh->HasTangentsAndBitangents ()) {
 		// NB: could store/print tangents here
 	}
-	
+
 	aiReleaseImport (scene);
 	printf ("mesh loaded\n");
-	
+
 	return true;
 }
 
@@ -133,7 +133,7 @@ btCollisionShape* load_mesh_point (const char* file_name) {
 	/* get first mesh in file only */
 	const aiMesh* mesh = scene->mMeshes[0];
 	printf ("    %i vertices in mesh[0]\n", mesh->mNumVertices);
-	
+
 	/* pass back number of vertex points in mesh */
 	int point_count = mesh->mNumVertices;
 	btTriangleMesh* meshTriangle = new btTriangleMesh();
@@ -147,12 +147,12 @@ btCollisionShape* load_mesh_point (const char* file_name) {
             btVector3 bv2 = btVector3(vp1->x, vp1->y, vp1->z);
             btVector3 bv3 = btVector3(vp2->x, vp2->y, vp2->z);
 
-            meshTriangle->addTriangle(bv1, bv2, bv3);     
+            meshTriangle->addTriangle(bv1, bv2, bv3);
 		}
 		_shape = new btBvhTriangleMeshShape(meshTriangle, true);
 	}
-	
+
 	aiReleaseImport (scene);
-	
+
 	return _shape;
 }

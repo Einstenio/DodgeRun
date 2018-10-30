@@ -2,6 +2,7 @@
 #define TOOLS_H
 
 #include <bullet/btBulletDynamicsCommon.h>
+#include "gl_utils.h"
 
 // funcion que carga una malla desde filename
 bool load_mesh (const char* file_name, GLuint* vao, int* point_count);
