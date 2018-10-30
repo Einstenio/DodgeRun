@@ -19,6 +19,7 @@
 #include "gl_utils.h"
 #include "tools.h"
 #include "malla.h"
+#include "Objeto.h"
 #include "GLDebugDrawer.hpp"
 
 //Constantes
@@ -113,19 +114,20 @@ int main(){
 	//Creación de Figuras
 
 	malla *ball = new malla((char*)"mallas/box/box.obj");
-	malla *piso = new malla((char*)"mallas/highway/highway.obj");
+	malla *piso_blender = new malla((char*)"mallas/highway/highway.obj");
 
 	//Creación de Cuerpos
 
-	//Pelota
+
+
 
 	btCollisionShape* ballShape = new btBoxShape(btVector3(1, 1, 1)); // Radio de Esfera
 	btTransform ballTransform;
 	ballTransform.setIdentity();
-	ballTransform.setOrigin(btVector3(0, 20, 1)); // Posicion incial
+	ballTransform.setOrigin(btVector3(5, 20, 1)); // Posicion incial
 	btScalar ballMass(10.); // Masa
 	bool isDynamicBall = (ballMass != 0.f);
-	btVector3 localInertiaBall(1, 0, 0);
+	btVector3 localInertiaBall(0, 0, 0);
 	if (isDynamicBall) ballShape->calculateLocalInertia(ballMass, localInertiaBall);
 
 	btDefaultMotionState* ballMotionState = new btDefaultMotionState(ballTransform);
@@ -135,24 +137,16 @@ int main(){
 
 	dynamicsWorld->addRigidBody(bodyBall);
 
-	//Piso
 
-	btCollisionShape* groundShape; // Tamaño de Piso
-	groundShape = load_mesh_point((char*)"mallas/highway/highway.obj");
-	btTransform pisoTransform;
-	pisoTransform.setIdentity();
-	pisoTransform.setOrigin(btVector3(0, -3, -2)); // Posicion incial
-	btScalar pisoMass(0.); // Masa
-	bool isDynamicPiso = (pisoMass != 0.f);
-	btVector3 localInertiaPiso(0, 0, 0);
-	if (isDynamicPiso) groundShape->calculateLocalInertia(pisoMass, localInertiaPiso);
 
-	btDefaultMotionState* pisoMotionState = new btDefaultMotionState(pisoTransform);
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(pisoMass, pisoMotionState, groundShape, localInertiaPiso);
-	btRigidBody* bodyPiso = new btRigidBody(rbInfo);
-	bodyPiso->setActivationState(DISABLE_DEACTIVATION);
+	Objeto *caja = new Objeto((char*)"mallas/box/box.obj", btVector3(0, 10, -1), btScalar(10.));
+	dynamicsWorld->addRigidBody(caja->objBody);
 
-	dynamicsWorld->addRigidBody(bodyPiso);
+	Objeto *piso2 = new Objeto((char*)"mallas/highway/highway.obj", btVector3(0, 10, -2), btScalar(.5));
+	dynamicsWorld->addRigidBody(piso2->objBody);
+
+	Objeto *piso3 = new Objeto((char*)"mallas/highway/highway.obj", btVector3(0, -3, -2), btScalar(0.));
+	dynamicsWorld->addRigidBody(piso3->objBody);
 
 	//Extras
 
@@ -179,19 +173,18 @@ int main(){
 
 		//Visualización de Objetos en la pantalla
 
-		//Pelota
-
-        bodyBall->getMotionState()->getWorldTransform(trans);
-        trans.getOpenGLMatrix(&aux[0][0]);
-        ball->setModelMatrix(aux);
-        ball->draw(model_mat_location);
-
 		//Piso
 
-		bodyPiso->getMotionState()->getWorldTransform(trans);
+		piso3->objBody->getMotionState()->getWorldTransform(trans);
 		trans.getOpenGLMatrix(&aux[0][0]);
-		piso->setModelMatrix(aux);
-		piso->draw(model_mat_location);
+		piso_blender->setModelMatrix(aux);
+		piso_blender->draw(model_mat_location);
+
+		piso2->objBody->getMotionState()->getWorldTransform(trans);
+		trans.getOpenGLMatrix(&aux[0][0]);
+		piso_blender->setModelMatrix(aux);
+		piso_blender->draw(model_mat_location);
+
 
 		//Depuración
 
@@ -216,7 +209,7 @@ int main(){
 
 void processInput(GLFWwindow *window){
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
-    float cameraSpeed = 2.5 * deltaTime;
+    float cameraSpeed = 50. * deltaTime;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         cameraPos += cameraSpeed * cameraFront;
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
