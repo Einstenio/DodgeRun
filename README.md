@@ -1,0 +1,4 @@
+# DodgeRun
+
+make
+./bin/prog
