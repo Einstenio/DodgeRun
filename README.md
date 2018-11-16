@@ -7,5 +7,5 @@ Instrucciones de Instalación y Ejecución
 	$ sudo apt install libbullet-dev libbullet-extras-dev
 	$ sudo apt install libassimp-dev
   
-## Ejecución
+## Run
 	$ make && ./bin/prog

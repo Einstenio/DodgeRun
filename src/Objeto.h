@@ -13,6 +13,6 @@ class Objeto{
 
     public:
         Objeto();
-        Objeto(char* PATH, btVector3 posicionInicial, btScalar masa);
+        Objeto(char* PATH, btVector3 posicionInicial, btScalar masa, bool estatico);
         btRigidBody* objBody;
 };

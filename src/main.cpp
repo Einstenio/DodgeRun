@@ -88,7 +88,7 @@ int main(){
 	btBroadphaseInterface* overlappingPairCache = new btDbvtBroadphase();
 	btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
 	btDiscreteDynamicsWorld* dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
-	dynamicsWorld->setGravity(btVector3(0, -10, 0)); //Gravedad
+	dynamicsWorld->setGravity(btVector3(0, -9.8f, 0));
 
 	//Depuración
 
@@ -107,150 +107,32 @@ int main(){
 
 	//Creación de Cuerpos con Clase Objeto
 
-	/*
-	Objeto *automovil = new Objeto((char*)"mallas/car/car.obj", btVector3(0, 15, -1), btScalar(0.));
+	Objeto *automovil = new Objeto((char*)"mallas/car/car.obj", btVector3(0, 15, -1), btScalar(1300.), false);
 	dynamicsWorld->addRigidBody(automovil->objBody);
 
-	Objeto *piedra00 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(15, -5, -40), btScalar(0.));
+	Objeto *piedra00 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(15, -5, -40), btScalar(0.), true);
 	dynamicsWorld->addRigidBody(piedra00->objBody);
 
-	Objeto *caja00 = new Objeto((char*)"mallas/box/box.obj", btVector3(0, 20, -20), btScalar(10.));
+	Objeto *caja00 = new Objeto((char*)"mallas/box/box.obj", btVector3(0, 20, -20), btScalar(10.), false);
 	dynamicsWorld->addRigidBody(caja00->objBody);
 
-	Objeto *caja01 = new Objeto((char*)"mallas/box/box.obj", btVector3(-3, 30, -40), btScalar(10.));
+	Objeto *caja01 = new Objeto((char*)"mallas/box/box.obj", btVector3(-3, 30, -40), btScalar(10.), false);
 	dynamicsWorld->addRigidBody(caja01->objBody);
 
-	Objeto *caja02 = new Objeto((char*)"mallas/box/box.obj", btVector3(5, 10, -60), btScalar(10.));
+	Objeto *caja02 = new Objeto((char*)"mallas/box/box.obj", btVector3(5, 10, -60), btScalar(10.), false);
 	dynamicsWorld->addRigidBody(caja02->objBody);
 
-	Objeto *caja03 = new Objeto((char*)"mallas/box/box.obj", btVector3(-3, 40, -80), btScalar(10.));
+	Objeto *caja03 = new Objeto((char*)"mallas/box/box.obj", btVector3(-3, 40, -80), btScalar(10.), false);
 	dynamicsWorld->addRigidBody(caja03->objBody);
 
-	Objeto *caja04 = new Objeto((char*)"mallas/box/box.obj", btVector3(0, 80, -100), btScalar(10.));
+	Objeto *caja04 = new Objeto((char*)"mallas/box/box.obj", btVector3(0, 80, -100), btScalar(10.), false);
 	dynamicsWorld->addRigidBody(caja04->objBody);
 
-	Objeto *caja05 = new Objeto((char*)"mallas/box/box.obj", btVector3(1, 70, -120), btScalar(10.));
+	Objeto *caja05 = new Objeto((char*)"mallas/box/box.obj", btVector3(1, 70, -120), btScalar(10.), false);
 	dynamicsWorld->addRigidBody(caja04->objBody);
-	*/
 
-	Objeto *carretera = new Objeto((char*)"mallas/highway/highway.obj", btVector3(0, -7, -115), btScalar(0.));
+	Objeto *carretera = new Objeto((char*)"mallas/highway/highway.obj", btVector3(0, -7, -115), btScalar(0.), true);
 	dynamicsWorld->addRigidBody(carretera->objBody);
-
-	//Creación de Cuerpos sin Clase Objeto
-
-	btCollisionShape* caja01Shape = new btBoxShape(btVector3(1, 1, 1));
-	btTransform caja01Transform;
-	caja01Transform.setIdentity();
-	caja01Transform.setOrigin(btVector3(0, 20, -20));
-	btScalar caja01Mass(10.); // Masa
-	bool isDynamiccaja01 = (caja01Mass != 0.f);
-	btVector3 localInertiacaja01(1, 0, 0);
-	if (isDynamiccaja01) caja01Shape->calculateLocalInertia(caja01Mass, localInertiacaja01);
-	btDefaultMotionState* caja01MotionState = new btDefaultMotionState(caja01Transform);
-	btRigidBody::btRigidBodyConstructionInfo caja01RbInfo(caja01Mass, caja01MotionState, caja01Shape, localInertiacaja01);
-	btRigidBody* bodycaja01 = new btRigidBody(caja01RbInfo);
-	bodycaja01->setActivationState(DISABLE_DEACTIVATION);
-	dynamicsWorld->addRigidBody(bodycaja01);
-
-	btCollisionShape* caja02Shape = new btBoxShape(btVector3(1, 1, 1));
-	btTransform caja02Transform;
-	caja02Transform.setIdentity();
-	caja02Transform.setOrigin(btVector3(-3, 30, -40));
-	btScalar caja02Mass(10.);
-	bool isDynamiccaja02 = (caja02Mass != 0.f);
-	btVector3 localInertiacaja02(1, 0, 0);
-	if (isDynamiccaja02) caja02Shape->calculateLocalInertia(caja02Mass, localInertiacaja02);
-	btDefaultMotionState* caja02MotionState = new btDefaultMotionState(caja02Transform);
-	btRigidBody::btRigidBodyConstructionInfo caja02RbInfo(caja02Mass, caja02MotionState, caja02Shape, localInertiacaja02);
-	btRigidBody* bodycaja02 = new btRigidBody(caja02RbInfo);
-	bodycaja02->setActivationState(DISABLE_DEACTIVATION);
-	dynamicsWorld->addRigidBody(bodycaja02);
-
-	btCollisionShape* caja03Shape = new btBoxShape(btVector3(1, 1, 1));
-	btTransform caja03Transform;
-	caja03Transform.setIdentity();
-	caja03Transform.setOrigin(btVector3(5, 10, -60));
-	btScalar caja03Mass(10.);
-	bool isDynamiccaja03 = (caja03Mass != 0.f);
-	btVector3 localInertiacaja03(1, 0, 0);
-	if (isDynamiccaja03) caja03Shape->calculateLocalInertia(caja03Mass, localInertiacaja03);
-	btDefaultMotionState* caja03MotionState = new btDefaultMotionState(caja03Transform);
-	btRigidBody::btRigidBodyConstructionInfo caja03RbInfo(caja03Mass, caja03MotionState, caja03Shape, localInertiacaja03);
-	btRigidBody* bodycaja03 = new btRigidBody(caja03RbInfo);
-	bodycaja03->setActivationState(DISABLE_DEACTIVATION);
-	dynamicsWorld->addRigidBody(bodycaja03);
-
-	btCollisionShape* caja04Shape = new btBoxShape(btVector3(1, 1, 1));
-	btTransform caja04Transform;
-	caja04Transform.setIdentity();
-	caja04Transform.setOrigin(btVector3(-3, 40, -80));
-	btScalar caja04Mass(10.);
-	bool isDynamiccaja04 = (caja04Mass != 0.f);
-	btVector3 localInertiacaja04(1, 0, 0);
-	if (isDynamiccaja04) caja04Shape->calculateLocalInertia(caja04Mass, localInertiacaja04);
-	btDefaultMotionState* caja04MotionState = new btDefaultMotionState(caja04Transform);
-	btRigidBody::btRigidBodyConstructionInfo caja04RbInfo(caja04Mass, caja04MotionState, caja04Shape, localInertiacaja04);
-	btRigidBody* bodycaja04 = new btRigidBody(caja04RbInfo);
-	bodycaja04->setActivationState(DISABLE_DEACTIVATION);
-	dynamicsWorld->addRigidBody(bodycaja04);
-
-	btCollisionShape* caja05Shape = new btBoxShape(btVector3(1, 1, 1));
-	btTransform caja05Transform;
-	caja05Transform.setIdentity();
-	caja05Transform.setOrigin(btVector3(0, 80, -100));
-	btScalar caja05Mass(10.);
-	bool isDynamiccaja05 = (caja05Mass != 0.f);
-	btVector3 localInertiacaja05(1, 0, 0);
-	if (isDynamiccaja05) caja05Shape->calculateLocalInertia(caja05Mass, localInertiacaja05);
-	btDefaultMotionState* caja05MotionState = new btDefaultMotionState(caja05Transform);
-	btRigidBody::btRigidBodyConstructionInfo caja05RbInfo(caja05Mass, caja05MotionState, caja05Shape, localInertiacaja05);
-	btRigidBody* bodycaja05 = new btRigidBody(caja05RbInfo);
-	bodycaja05->setActivationState(DISABLE_DEACTIVATION);
-	dynamicsWorld->addRigidBody(bodycaja05);
-
-	btCollisionShape* caja06Shape = new btBoxShape(btVector3(1, 1, 1));
-	btTransform caja06Transform;
-	caja06Transform.setIdentity();
-	caja06Transform.setOrigin(btVector3(1, 70, -120));
-	btScalar caja06Mass(10.);
-	bool isDynamiccaja06 = (caja06Mass != 0.f);
-	btVector3 localInertiacaja06(1, 0, 0);
-	if (isDynamiccaja06) caja06Shape->calculateLocalInertia(caja06Mass, localInertiacaja06);
-	btDefaultMotionState* caja06MotionState = new btDefaultMotionState(caja06Transform);
-	btRigidBody::btRigidBodyConstructionInfo caja06RbInfo(caja06Mass, caja06MotionState, caja06Shape, localInertiacaja06);
-	btRigidBody* bodycaja06 = new btRigidBody(caja06RbInfo);
-	bodycaja06->setActivationState(DISABLE_DEACTIVATION);
-	dynamicsWorld->addRigidBody(bodycaja06);
-
-	btCollisionShape* carShape;
-	carShape = load_mesh_point((char*)"mallas/car/car.obj");
-	btTransform carTransform;
-	carTransform.setIdentity();
-	carTransform.setOrigin(btVector3(0, -6, -1));
-	btScalar carMass(0.);
-	bool isDynamiccar = (carMass != 1.0f);
-	btVector3 localInertiacar(0, 0, 0);
-	if (isDynamiccar) carShape->calculateLocalInertia(carMass, localInertiacar);
-	btDefaultMotionState* carMotionState = new btDefaultMotionState(carTransform);
-	btRigidBody::btRigidBodyConstructionInfo crInfo(carMass, carMotionState, carShape, localInertiacar);
-	btRigidBody* bodycar = new btRigidBody(crInfo);
-	bodycar->setActivationState(DISABLE_DEACTIVATION);
-	dynamicsWorld->addRigidBody(bodycar);
-
-	btCollisionShape* piedraShape;
-	piedraShape = load_mesh_point((char*)"mallas/rock/rock.obj");
-	btTransform piedraTransform;
-	piedraTransform.setIdentity();
-	piedraTransform.setOrigin(btVector3(15, -5, -40));
-	btScalar piedraMass(0.);
-	bool isDynamicpiedra = (piedraMass != 1.0f);
-	btVector3 localInertiapiedra(0, 0, 0);
-	if (isDynamicpiedra) piedraShape->calculateLocalInertia(piedraMass, localInertiapiedra);
-	btDefaultMotionState* piedraMotionState = new btDefaultMotionState(piedraTransform);
-	btRigidBody::btRigidBodyConstructionInfo piedraInfo(piedraMass, piedraMotionState, piedraShape, localInertiapiedra);
-	btRigidBody* bodypiedra = new btRigidBody(piedraInfo);
-	bodypiedra->setActivationState(DISABLE_DEACTIVATION);
-	dynamicsWorld->addRigidBody(bodypiedra);
 
 	//Otros
 
@@ -280,47 +162,7 @@ int main(){
 		carretera->objBody->getMotionState()->getWorldTransform(trans);
 		trans.getOpenGLMatrix(&aux[0][0]);
 		highway->setModelMatrix(aux);
-		highway->draw(model_mat_location);		
-
-		bodycar->getMotionState()->getWorldTransform(trans);
-		trans.getOpenGLMatrix(&aux[0][0]);
-		car->setModelMatrix(aux);
-		car->draw(model_mat_location);
-
-		bodypiedra->getMotionState()->getWorldTransform(trans);
-		trans.getOpenGLMatrix(&aux[0][0]);
-		rock->setModelMatrix(aux);
-		rock->draw(model_mat_location);
-
-		bodycaja01->getMotionState()->getWorldTransform(trans);
-        trans.getOpenGLMatrix(&aux[0][0]);
-        box->setModelMatrix(aux);
-        box->draw(model_mat_location);
-
-        bodycaja02->getMotionState()->getWorldTransform(trans);
-        trans.getOpenGLMatrix(&aux[0][0]);
-        box->setModelMatrix(aux);
-        box->draw(model_mat_location);
-
-		bodycaja03->getMotionState()->getWorldTransform(trans);
-        trans.getOpenGLMatrix(&aux[0][0]);
-        box->setModelMatrix(aux);
-        box->draw(model_mat_location);
-
-        bodycaja04->getMotionState()->getWorldTransform(trans);
-        trans.getOpenGLMatrix(&aux[0][0]);
-        box->setModelMatrix(aux);
-        box->draw(model_mat_location);
-
-        bodycaja05->getMotionState()->getWorldTransform(trans);
-        trans.getOpenGLMatrix(&aux[0][0]);
-        box->setModelMatrix(aux);
-        box->draw(model_mat_location);
-
-        bodycaja06->getMotionState()->getWorldTransform(trans);
-        trans.getOpenGLMatrix(&aux[0][0]);
-        box->setModelMatrix(aux);
-        box->draw(model_mat_location);
+		highway->draw(model_mat_location);
 
 		//Depuración
 
@@ -360,8 +202,9 @@ void init(){
 }
 
 void processInput(GLFWwindow *window){
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
-    float cameraSpeed = 50. * deltaTime;
+	float cameraSpeed = 50. * deltaTime;
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         cameraPos += cameraSpeed * cameraFront;
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
