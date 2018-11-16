@@ -123,7 +123,7 @@ bool load_mesh (const char* file_name, GLuint* vao, int* point_count) {
 	return true;
 }
 
-btCollisionShape* load_mesh_point (const char* file_name) {
+btCollisionShape* load_mesh_point_static (const char* file_name) {
 	const aiScene* scene = aiImportFile(file_name, aiProcess_Triangulate);
 	btCollisionShape *_shape = NULL;
 	if (!scene) {
@@ -155,4 +155,39 @@ btCollisionShape* load_mesh_point (const char* file_name) {
 	aiReleaseImport (scene);
 
 	return _shape;
+}
+
+btCollisionShape* load_mesh_point (const char* file_name) {
+	const aiScene* scene = aiImportFile(file_name, aiProcess_Triangulate);
+	btCollisionShape *_shape = NULL;
+	if (!scene) {
+		fprintf (stderr, "ERROR: reading mesh %s\n", file_name);
+		return NULL;
+	}
+	/* get first mesh in file only */
+	const aiMesh* mesh = scene->mMeshes[0];
+	printf ("    %i vertices in mesh[0]\n", mesh->mNumVertices);
+
+	/* pass back number of vertex points in mesh */
+	int point_count = mesh->mNumVertices;
+	_shape = new btConvexHullShape();
+	if (mesh->HasPositions ()) {
+		for (int i = 0; i < point_count; i++) {
+			const aiVector3D* vp = &(mesh->mVertices[i]);
+
+            btVector3 bv1 = btVector3(vp->x, vp->y, vp->z);
+
+            ((btConvexHullShape*)_shape)->addPoint(bv1, true);
+		}
+	}
+
+	aiReleaseImport (scene);
+
+	btShapeHull* hull = new btShapeHull((btConvexShape*)_shape);
+	btScalar margin = _shape->getMargin();
+	hull->buildHull(margin);
+	btConvexHullShape* simplifedConvexShape = new btConvexHullShape((const btScalar*)hull->getVertexPointer(), hull->numVertices(), sizeof(btVector3));
+
+
+	return simplifedConvexShape;
 }
