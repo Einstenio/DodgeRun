@@ -20,6 +20,7 @@
 #include "tools.hpp"
 #include "malla.h"
 #include "Objeto.hpp"
+#include "Car.hpp"
 #include "GLDebugDrawer.hpp"
 
 //Constantes
@@ -107,7 +108,7 @@ int main(){
 
 	//Creación de Cuerpos con Clase Objeto
 
-	Objeto *automovil = new Objeto((char*)"mallas/car/car.obj", btVector3(0, 15, -1), btScalar(1300.), false);
+	Car *automovil = new Car((char*)"mallas/car/car.obj", btVector3(0, 15, -1), btScalar(1300.), false);
 	dynamicsWorld->addRigidBody(automovil->objBody);
 
 	Objeto *piedra00 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(15, -5, -40), btScalar(0.), true);

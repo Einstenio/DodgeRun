@@ -1,18 +1,25 @@
+#ifndef CAR_H
+#define CAR_H
 using namespace std;
 #include "Objeto.hpp"
 
-class Car{
+class Car : public Objeto{
     private:
         int heart;
-        float gasoline;
+        int gasoline;
+        float speed;
         bool isAlive;
 
     public:
-        Car();
-        /*setHeart(int heart);
-        setGasoline(float gasoline);
-        setIsAlive(bool isAlive);
+        Car(char* PATH, btVector3 posicionInicial, btScalar masa, bool estatico);
+        void setHeart(int heart);
         int getHeart();
-        float gasoline();
-        bool isAlive();*/
+        void setGasoline(int gasoline);
+        int getGasoline();
+        void setIsAlive(bool isAlive);
+        bool getIsAlive();
+        void setSpeed(float speed);
+        float getSpeed();
 };
+
+#endif

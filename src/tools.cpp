@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include <math.h>
 #include <string>
-#include <GL/glew.h> // include GLEW and new version of GL on Windows
-#include <assimp/cimport.h> // C importer
-#include <assimp/scene.h> // collects data
-#include <assimp/postprocess.h> // various extra operations
+#include <GL/glew.h>
+#include <assimp/cimport.h>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 #include "gl_utils.h"
 #include "tools.hpp"
 
@@ -40,26 +40,14 @@ bool load_mesh (const char* file_name, GLuint* vao, int* point_count) {
 	printf ("  %i materials\n", scene->mNumMaterials);
 	printf ("  %i meshes\n", scene->mNumMeshes);
 	printf ("  %i textures\n", scene->mNumTextures);
-
-	/* get first mesh in file only */
 	const aiMesh* mesh = scene->mMeshes[0];
 	printf ("    %i vertices in mesh[0]\n", mesh->mNumVertices);
-
-	/* pass back number of vertex points in mesh */
 	*point_count = mesh->mNumVertices;
-
-	/* generate a VAO, using the pass-by-reference parameter that we give to the
-	function */
 	glGenVertexArrays (1, vao);
 	glBindVertexArray (*vao);
-
-	/* we really need to copy out all the data from AssImp's funny little data
-	structures into pure contiguous arrays before we copy it into data buffers
-	because assimp's texture coordinates are not really contiguous in memory.
-	i allocate some dynamic memory to do this. */
-	GLfloat* points = NULL; // array of vertex points
-	GLfloat* normals = NULL; // array of vertex normals
-	GLfloat* texcoords = NULL; // array of texture coordinates
+	GLfloat* points = NULL;
+	GLfloat* normals = NULL;
+	GLfloat* texcoords = NULL;
 	if (mesh->HasPositions ()) {
 		points = (GLfloat*)malloc (*point_count * 3 * sizeof (GLfloat));
 		for (int i = 0; i < *point_count; i++) {
@@ -131,12 +119,9 @@ bool load_mesh (const char* file_name, GLuint* vao, int* point_count) {
 		free (texcoords);
 	}
 	if (mesh->HasTangentsAndBitangents ()) {
-		// NB: could store/print tangents here
 	}
-
 	aiReleaseImport (scene);
 	printf ("mesh loaded\n");
-
 	return true;
 }
 
@@ -147,11 +132,8 @@ btCollisionShape* load_mesh_point_static (const char* file_name) {
 		fprintf (stderr, "ERROR: reading mesh %s\n", file_name);
 		return NULL;
 	}
-	/* get first mesh in file only */
 	const aiMesh* mesh = scene->mMeshes[0];
 	printf ("    %i vertices in mesh[0]\n", mesh->mNumVertices);
-
-	/* pass back number of vertex points in mesh */
 	int point_count = mesh->mNumVertices;
 	btTriangleMesh* meshTriangle = new btTriangleMesh();
 	if (mesh->HasPositions ()) {
@@ -159,18 +141,14 @@ btCollisionShape* load_mesh_point_static (const char* file_name) {
 			const aiVector3D* vp = &(mesh->mVertices[i]);
 			const aiVector3D* vp1 = &(mesh->mVertices[i+1]);
 			const aiVector3D* vp2 = &(mesh->mVertices[i+2]);
-
             btVector3 bv1 = btVector3(vp->x, vp->y, vp->z);
             btVector3 bv2 = btVector3(vp1->x, vp1->y, vp1->z);
             btVector3 bv3 = btVector3(vp2->x, vp2->y, vp2->z);
-
             meshTriangle->addTriangle(bv1, bv2, bv3);
 		}
 		_shape = new btBvhTriangleMeshShape(meshTriangle, true);
 	}
-
 	aiReleaseImport (scene);
-
 	return _shape;
 }
 
@@ -181,30 +159,21 @@ btCollisionShape* load_mesh_point (const char* file_name) {
 		fprintf (stderr, "ERROR: reading mesh %s\n", file_name);
 		return NULL;
 	}
-	/* get first mesh in file only */
 	const aiMesh* mesh = scene->mMeshes[0];
 	printf ("    %i vertices in mesh[0]\n", mesh->mNumVertices);
-
-	/* pass back number of vertex points in mesh */
 	int point_count = mesh->mNumVertices;
 	_shape = new btConvexHullShape();
 	if (mesh->HasPositions ()) {
 		for (int i = 0; i < point_count; i++) {
 			const aiVector3D* vp = &(mesh->mVertices[i]);
-
             btVector3 bv1 = btVector3(vp->x, vp->y, vp->z);
-
             ((btConvexHullShape*)_shape)->addPoint(bv1, true);
 		}
 	}
-
 	aiReleaseImport (scene);
-
 	btShapeHull* hull = new btShapeHull((btConvexShape*)_shape);
 	btScalar margin = _shape->getMargin();
 	hull->buildHull(margin);
 	btConvexHullShape* simplifedConvexShape = new btConvexHullShape((const btScalar*)hull->getVertexPointer(), hull->numVertices(), sizeof(btVector3));
-
-
 	return simplifedConvexShape;
 }

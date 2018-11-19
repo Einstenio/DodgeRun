@@ -4,7 +4,6 @@
 #define GL_DEBUG_DRAWER_H
 
 #include "LinearMath/btIDebugDraw.h"
-//OPENGL GLFW
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/fwd.hpp>
