@@ -1,0 +1,4 @@
+class Game{
+    private:
+    public:
+}
