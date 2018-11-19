@@ -7,9 +7,26 @@
 #include <assimp/scene.h> // collects data
 #include <assimp/postprocess.h> // various extra operations
 #include "gl_utils.h"
-#include "tools.h"
+#include "tools.hpp"
 
 #define PI 3.14159265359
+
+void init(){
+	restart_gl_log ();
+	start_gl ();
+	glEnable (GL_DEPTH_TEST);
+	glDepthFunc (GL_LESS);
+	glEnable (GL_CULL_FACE);
+	glCullFace (GL_BACK);
+	glFrontFace (GL_CCW);
+	glClearColor (0.2, 0.2, 0.2, 1.0);
+	glViewport (0, 0, g_gl_width, g_gl_height);
+	glfwSetFramebufferSizeCallback(g_window, framebuffer_size_callback);
+}
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height){
+    glViewport(0, 0, width, height);
+}
 
 bool load_mesh (const char* file_name, GLuint* vao, int* point_count) {
 	const aiScene* scene = aiImportFile(file_name, aiProcess_Triangulate);
@@ -128,7 +145,7 @@ btCollisionShape* load_mesh_point_static (const char* file_name) {
 	btCollisionShape *_shape = NULL;
 	if (!scene) {
 		fprintf (stderr, "ERROR: reading mesh %s\n", file_name);
-		return false;
+		return NULL;
 	}
 	/* get first mesh in file only */
 	const aiMesh* mesh = scene->mMeshes[0];
