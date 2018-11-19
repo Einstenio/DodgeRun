@@ -36,8 +36,7 @@ GLFWwindow* g_window = NULL;
 
 //Declara Métodos
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos); //Usar mouse -BORRAR-
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
 
@@ -62,6 +61,8 @@ float lastFrame = 0.0f;
 int main(){
 
 	init();
+	
+	glfwSetCursorPosCallback(g_window, mouse_callback); //Usar mouse -BORRAR-
 
 	//Creación de Shaders
 

@@ -6,6 +6,7 @@ Instrucciones de Instalación y Ejecución
 
 	$ sudo apt install libbullet-dev libbullet-extras-dev
 	$ sudo apt install libassimp-dev
+	$ sudo apt install libalut-dev libalut0
   
 ## Run
 	$ make && ./bin/prog
