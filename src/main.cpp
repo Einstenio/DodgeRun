@@ -164,6 +164,46 @@ int main(){
 		trans.getOpenGLMatrix(&aux[0][0]);
 		highway->setModelMatrix(aux);
 		highway->draw(model_mat_location);
+		
+		automovil->objBody->getMotionState()->getWorldTransform(trans);
+		trans.getOpenGLMatrix(&aux[0][0]);
+		car->setModelMatrix(aux);
+		car->draw(model_mat_location);
+
+		piedra00->objBody->getMotionState()->getWorldTransform(trans);
+		trans.getOpenGLMatrix(&aux[0][0]);
+		rock->setModelMatrix(aux);
+		rock->draw(model_mat_location);
+
+		caja01->objBody->getMotionState()->getWorldTransform(trans);
+		trans.getOpenGLMatrix(&aux[0][0]);
+		box->setModelMatrix(aux);
+		box->draw(model_mat_location);
+
+		caja02->objBody->getMotionState()->getWorldTransform(trans);
+		trans.getOpenGLMatrix(&aux[0][0]);
+		box->setModelMatrix(aux);
+		box->draw(model_mat_location);
+
+		caja03->objBody->getMotionState()->getWorldTransform(trans);
+		trans.getOpenGLMatrix(&aux[0][0]);
+		box->setModelMatrix(aux);
+		box->draw(model_mat_location);
+
+		caja04->objBody->getMotionState()->getWorldTransform(trans);
+		trans.getOpenGLMatrix(&aux[0][0]);
+		box->setModelMatrix(aux);
+		box->draw(model_mat_location);
+
+		caja05->objBody->getMotionState()->getWorldTransform(trans);
+		trans.getOpenGLMatrix(&aux[0][0]);
+		box->setModelMatrix(aux);
+		box->draw(model_mat_location);
+
+		caja00->objBody->getMotionState()->getWorldTransform(trans);
+		trans.getOpenGLMatrix(&aux[0][0]);
+		box->setModelMatrix(aux);
+		box->draw(model_mat_location);														
 
 		//Depuración
 
