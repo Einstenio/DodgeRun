@@ -1,6 +1,8 @@
 #ifndef MALLA_H
 #define MALLA_H
 
+#include <GL/glew.h>
+#include <glm/glm.hpp>
 using namespace std;
 
 class malla{
@@ -16,22 +18,17 @@ class malla{
 
     public:
         malla(char *filename);
-
-        // gets
         GLuint getVao();
         int getNumVertices();
         glm::vec3 getPosition();
         glm::vec3 getRotation();
         char* getFilename();
-
-        // sets
         void setVao(GLuint vao);
         void setNumVertices(int num);
         void setPosition(glm::vec3 pos);
         void setRotation(float ang, glm::vec3 rot);
         void setFilename(char *f);
         void setModelMatrix(glm::mat4 model);
-
         void draw(int matloc);
 };
 

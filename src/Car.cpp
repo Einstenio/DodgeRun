@@ -38,3 +38,5 @@ void Car::setSpeed(float speed){
 float Car::getSpeed(){
 	return speed;
 }
+
+/* http://isaaclacoba.github.io/tinman/posts/creando-coche/creando-coches-para-el-juego.html */
