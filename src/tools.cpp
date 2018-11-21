@@ -74,8 +74,6 @@ bool load_mesh (const char* file_name, GLuint* vao, int* point_count) {
 			texcoords[i * 2 + 1] = (GLfloat)vt->y;
 		}
 	}
-
-	/* copy mesh data into VBOs */
 	if (mesh->HasPositions ()) {
 		GLuint vbo;
 		glGenBuffers (1, &vbo);

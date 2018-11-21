@@ -8,7 +8,6 @@
 #include <bullet/btBulletDynamicsCommon.h>
 #include "Car.hpp"
 #include "Objeto.hpp"
-#include "GLDebugDrawer.hpp"
 using namespace glm;
 
 class World{
@@ -19,12 +18,9 @@ class World{
         btBroadphaseInterface* overlappingPairCache;
         btSequentialImpulseConstraintSolver* solver;
         btDiscreteDynamicsWorld* dynamicsWorld;
-        GLDebugDrawer* debug;
     public:
         World();
         void addObject(Objeto *obj);
-        void debugDrawer(GLDebugDrawer* debug);
-        void debugWorld();
 };
 
 #endif

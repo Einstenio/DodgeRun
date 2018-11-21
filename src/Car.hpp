@@ -1,6 +1,5 @@
 #ifndef CAR_H
 #define CAR_H
-using namespace std;
 #include "Objeto.hpp"
 
 class Car : public Objeto{

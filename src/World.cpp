@@ -10,14 +10,6 @@ World::World(){
     dynamicsWorld->stepSimulation(1.f / 60.f, 10);
 }
 
-void World::debugDrawer(GLDebugDrawer* debug){
-    dynamicsWorld->setDebugDrawer(debug);
-}
-
-void World::debugWorld(){
-    dynamicsWorld->debugDrawWorld();
-}
-
 void World::addObject(Objeto *obj){
     dynamicsWorld->addRigidBody(obj->objBody);
 }

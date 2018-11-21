@@ -23,6 +23,7 @@
 #include "Car.hpp"
 #include "GLDebugDrawer.hpp"
 #include "World.hpp"
+using namespace glm;
 
 //Constantes
 
@@ -83,14 +84,6 @@ int main(){
 
 	World *mundo = new World();
 
-	//Depuración
-
-	GLDebugDrawer* debug = new GLDebugDrawer();
-	debug->setDebugMode(btIDebugDraw::DBG_DrawWireframe );
-	debug->setView(&view);
-	debug->setProj(&projection);
-	mundo->debugDrawer(debug);
-
 	//Creación de Figuras
 
 	malla *box = new malla((char*)"mallas/box/box.obj");
@@ -129,7 +122,7 @@ int main(){
 
 	//Otros
 
-    glm::mat4 aux;
+    mat4 aux;
 
     while (!glfwWindowShouldClose(g_window)){
 
@@ -151,20 +144,15 @@ int main(){
 
 		//Visualización de Objetos en la pantalla
 
-		carretera->showObject(trans);
-		trans.getOpenGLMatrix(&aux[0][0]);
-		highway->setModelMatrix(aux);
-		highway->draw(model_mat_location);
-
-		automovil->showObject(trans);
-		trans.getOpenGLMatrix(&aux[0][0]);
-		car->setModelMatrix(aux);
-		car->draw(model_mat_location);
-		
-		debug->setView(&view);
-		debug->setProj(&projection);
-		mundo->debugWorld();
-		debug->drawLines();
+		carretera->showObject(trans, aux, highway, model_mat_location);
+		automovil->showObject(trans, aux, car, model_mat_location);
+		piedra00->showObject(trans, aux, rock, model_mat_location);
+		caja00->showObject(trans, aux, box, model_mat_location);
+		caja01->showObject(trans, aux, box, model_mat_location);
+		caja02->showObject(trans, aux, box, model_mat_location);
+		caja03->showObject(trans, aux, box, model_mat_location);
+		caja04->showObject(trans, aux, box, model_mat_location);
+		caja05->showObject(trans, aux, box, model_mat_location);
 
 		//Otros
 
