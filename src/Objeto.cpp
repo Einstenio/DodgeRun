@@ -1,7 +1,7 @@
 #include "Objeto.hpp"
 
-Objeto::Objeto(char* PATH, btVector3 posicionInicial, btScalar masa, bool estatico){
-    if (estatico) this->objShape = load_mesh_point_static(PATH);
+Objeto::Objeto(char* PATH, btVector3 posicionInicial, btScalar masa){
+    if (masa == (btScalar)(0.)) this->objShape = load_mesh_point_static(PATH);
     else this->objShape = load_mesh_point(PATH);    
     this->objShape = load_mesh_point(PATH);
     this->objTransform.setIdentity();

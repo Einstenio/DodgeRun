@@ -1,6 +1,6 @@
 #include "Car.hpp"
 
-Car::Car(char* PATH, btVector3 posicionInicial, btScalar masa, bool estatico) : Objeto(PATH, posicionInicial, masa, estatico){
+Car::Car(char* PATH, btVector3 posicionInicial, btScalar masa) : Objeto(PATH, posicionInicial, masa){
 	this->heart = 3;
 	this->gasoline = 100;
 	this->isAlive = true;

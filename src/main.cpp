@@ -100,31 +100,31 @@ int main(){
 
 	//Creación de Cuerpos con Clase Objeto
 
-	Objeto *carretera = new Objeto((char*)"mallas/highway/highway.obj", btVector3(0, -7, -115), btScalar(0.), true);
+	Objeto *carretera = new Objeto((char*)"mallas/highway/highway.obj", btVector3(0, -7, -115), btScalar(0.));
 	mundo->addObject(carretera);
 
-	Car *automovil = new Car((char*)"mallas/car/car.obj", btVector3(0, 15, -1), btScalar(1300.), false);
+	Car *automovil = new Car((char*)"mallas/car/car.obj", btVector3(0, 15, -1), btScalar(1300.));
 	mundo->addObject(automovil);
 
-	Objeto *piedra00 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(15, -5, -40), btScalar(0.), true);
+	Objeto *piedra00 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(15, -5, -40), btScalar(0.));
 	mundo->addObject(piedra00);
 
-	Objeto *caja00 = new Objeto((char*)"mallas/box/box.obj", btVector3(0, 20, -20), btScalar(10.), false);
+	Objeto *caja00 = new Objeto((char*)"mallas/box/box.obj", btVector3(0, 20, -20), btScalar(10.));
 	mundo->addObject(caja00);
 
-	Objeto *caja01 = new Objeto((char*)"mallas/box/box.obj", btVector3(-3, 30, -40), btScalar(10.), false);
+	Objeto *caja01 = new Objeto((char*)"mallas/box/box.obj", btVector3(-3, 30, -40), btScalar(10.));
 	mundo->addObject(caja01);
 
-	Objeto *caja02 = new Objeto((char*)"mallas/box/box.obj", btVector3(5, 10, -60), btScalar(10.), false);
+	Objeto *caja02 = new Objeto((char*)"mallas/box/box.obj", btVector3(5, 10, -60), btScalar(10.));
 	mundo->addObject(caja02);
 
-	Objeto *caja03 = new Objeto((char*)"mallas/box/box.obj", btVector3(-3, 40, -80), btScalar(10.), false);
+	Objeto *caja03 = new Objeto((char*)"mallas/box/box.obj", btVector3(-3, 40, -80), btScalar(10.));
 	mundo->addObject(caja03);
 
-	Objeto *caja04 = new Objeto((char*)"mallas/box/box.obj", btVector3(0, 80, -100), btScalar(10.), false);
+	Objeto *caja04 = new Objeto((char*)"mallas/box/box.obj", btVector3(0, 80, -100), btScalar(10.));
 	mundo->addObject(caja04);
 
-	Objeto *caja05 = new Objeto((char*)"mallas/box/box.obj", btVector3(1, 70, -120), btScalar(10.), false);
+	Objeto *caja05 = new Objeto((char*)"mallas/box/box.obj", btVector3(1, 70, -120), btScalar(10.));
 	mundo->addObject(caja05);
 
 	//Otros
@@ -160,15 +160,6 @@ int main(){
 		trans.getOpenGLMatrix(&aux[0][0]);
 		car->setModelMatrix(aux);
 		car->draw(model_mat_location);
-
-
-		/*piedra00->showObject(trans);
-		caja00->showObject(trans);
-		caja01->showObject(trans);
-		caja02->showObject(trans);
-		caja03->showObject(trans);
-		caja04->showObject(trans);
-		caja05->showObject(trans);*/
 		
 		debug->setView(&view);
 		debug->setProj(&projection);

@@ -1,7 +1,6 @@
 #ifndef OBJETO_H
 #define OBJETO_H
 
-using namespace std;
 #include "tools.hpp"
 #include <bullet/btBulletDynamicsCommon.h>
 
@@ -15,7 +14,7 @@ class Objeto{
         btDefaultMotionState* objMotionState;
 
     public:
-        Objeto(char* PATH, btVector3 posicionInicial, btScalar masa, bool estatico);
+        Objeto(char* PATH, btVector3 posicionInicial, btScalar masa);
         void showObject(btTransform trans);
         btRigidBody* objBody;
 };

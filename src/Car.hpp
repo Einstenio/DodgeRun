@@ -11,7 +11,7 @@ class Car : public Objeto{
         bool isAlive;
 
     public:
-        Car(char* PATH, btVector3 posicionInicial, btScalar masa, bool estatico);
+        Car(char* PATH, btVector3 posicionInicial, btScalar masa);
         void setHeart(int heart);
         int getHeart();
         void setGasoline(int gasoline);
