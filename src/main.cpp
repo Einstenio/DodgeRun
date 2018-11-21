@@ -22,6 +22,7 @@
 #include "Objeto.hpp"
 #include "Car.hpp"
 #include "GLDebugDrawer.hpp"
+#include "World.hpp"
 
 //Constantes
 
@@ -37,8 +38,6 @@ GLFWwindow* g_window = NULL;
 
 //Declara Métodos
 
-void mouse_callback(GLFWwindow* window, double xpos, double ypos); //Usar mouse -BORRAR-
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
 
 //Opciones Sobre la Cámara
@@ -62,8 +61,6 @@ float lastFrame = 0.0f;
 int main(){
 
 	init();
-	
-	glfwSetCursorPosCallback(g_window, mouse_callback); //Usar mouse -BORRAR-
 
 	//Creación de Shaders
 
@@ -84,12 +81,7 @@ int main(){
 
 	//Creación del Mundo Físico
 
-	btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
-	btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
-	btBroadphaseInterface* overlappingPairCache = new btDbvtBroadphase();
-	btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
-	btDiscreteDynamicsWorld* dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
-	dynamicsWorld->setGravity(btVector3(0, -9.8f, 0));
+	World *mundo = new World();
 
 	//Depuración
 
@@ -97,7 +89,7 @@ int main(){
 	debug->setDebugMode(btIDebugDraw::DBG_DrawWireframe );
 	debug->setView(&view);
 	debug->setProj(&projection);
-	dynamicsWorld->setDebugDrawer(debug);
+	mundo->debugDrawer(debug);
 
 	//Creación de Figuras
 
@@ -108,32 +100,32 @@ int main(){
 
 	//Creación de Cuerpos con Clase Objeto
 
+	Objeto *carretera = new Objeto((char*)"mallas/highway/highway.obj", btVector3(0, -7, -115), btScalar(0.), true);
+	mundo->addObject(carretera);
+
 	Car *automovil = new Car((char*)"mallas/car/car.obj", btVector3(0, 15, -1), btScalar(1300.), false);
-	dynamicsWorld->addRigidBody(automovil->objBody);
+	mundo->addObject(automovil);
 
 	Objeto *piedra00 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(15, -5, -40), btScalar(0.), true);
-	dynamicsWorld->addRigidBody(piedra00->objBody);
+	mundo->addObject(piedra00);
 
 	Objeto *caja00 = new Objeto((char*)"mallas/box/box.obj", btVector3(0, 20, -20), btScalar(10.), false);
-	dynamicsWorld->addRigidBody(caja00->objBody);
+	mundo->addObject(caja00);
 
 	Objeto *caja01 = new Objeto((char*)"mallas/box/box.obj", btVector3(-3, 30, -40), btScalar(10.), false);
-	dynamicsWorld->addRigidBody(caja01->objBody);
+	mundo->addObject(caja01);
 
 	Objeto *caja02 = new Objeto((char*)"mallas/box/box.obj", btVector3(5, 10, -60), btScalar(10.), false);
-	dynamicsWorld->addRigidBody(caja02->objBody);
+	mundo->addObject(caja02);
 
 	Objeto *caja03 = new Objeto((char*)"mallas/box/box.obj", btVector3(-3, 40, -80), btScalar(10.), false);
-	dynamicsWorld->addRigidBody(caja03->objBody);
+	mundo->addObject(caja03);
 
 	Objeto *caja04 = new Objeto((char*)"mallas/box/box.obj", btVector3(0, 80, -100), btScalar(10.), false);
-	dynamicsWorld->addRigidBody(caja04->objBody);
+	mundo->addObject(caja04);
 
 	Objeto *caja05 = new Objeto((char*)"mallas/box/box.obj", btVector3(1, 70, -120), btScalar(10.), false);
-	dynamicsWorld->addRigidBody(caja04->objBody);
-
-	Objeto *carretera = new Objeto((char*)"mallas/highway/highway.obj", btVector3(0, -7, -115), btScalar(0.), true);
-	dynamicsWorld->addRigidBody(carretera->objBody);
+	mundo->addObject(caja05);
 
 	//Otros
 
@@ -143,7 +135,6 @@ int main(){
 
         // Variables Previas a Ejecución
 
-		dynamicsWorld->stepSimulation(1.f / 60.f, 10);
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
@@ -160,56 +151,28 @@ int main(){
 
 		//Visualización de Objetos en la pantalla
 
-		carretera->objBody->getMotionState()->getWorldTransform(trans);
+		carretera->showObject(trans);
 		trans.getOpenGLMatrix(&aux[0][0]);
 		highway->setModelMatrix(aux);
 		highway->draw(model_mat_location);
-		
-		automovil->objBody->getMotionState()->getWorldTransform(trans);
+
+		automovil->showObject(trans);
 		trans.getOpenGLMatrix(&aux[0][0]);
 		car->setModelMatrix(aux);
 		car->draw(model_mat_location);
 
-		piedra00->objBody->getMotionState()->getWorldTransform(trans);
-		trans.getOpenGLMatrix(&aux[0][0]);
-		rock->setModelMatrix(aux);
-		rock->draw(model_mat_location);
 
-		caja01->objBody->getMotionState()->getWorldTransform(trans);
-		trans.getOpenGLMatrix(&aux[0][0]);
-		box->setModelMatrix(aux);
-		box->draw(model_mat_location);
-
-		caja02->objBody->getMotionState()->getWorldTransform(trans);
-		trans.getOpenGLMatrix(&aux[0][0]);
-		box->setModelMatrix(aux);
-		box->draw(model_mat_location);
-
-		caja03->objBody->getMotionState()->getWorldTransform(trans);
-		trans.getOpenGLMatrix(&aux[0][0]);
-		box->setModelMatrix(aux);
-		box->draw(model_mat_location);
-
-		caja04->objBody->getMotionState()->getWorldTransform(trans);
-		trans.getOpenGLMatrix(&aux[0][0]);
-		box->setModelMatrix(aux);
-		box->draw(model_mat_location);
-
-		caja05->objBody->getMotionState()->getWorldTransform(trans);
-		trans.getOpenGLMatrix(&aux[0][0]);
-		box->setModelMatrix(aux);
-		box->draw(model_mat_location);
-
-		caja00->objBody->getMotionState()->getWorldTransform(trans);
-		trans.getOpenGLMatrix(&aux[0][0]);
-		box->setModelMatrix(aux);
-		box->draw(model_mat_location);														
-
-		//Depuración
-
+		/*piedra00->showObject(trans);
+		caja00->showObject(trans);
+		caja01->showObject(trans);
+		caja02->showObject(trans);
+		caja03->showObject(trans);
+		caja04->showObject(trans);
+		caja05->showObject(trans);*/
+		
 		debug->setView(&view);
 		debug->setProj(&projection);
-		dynamicsWorld->debugDrawWorld();
+		mundo->debugWorld();
 		debug->drawLines();
 
 		//Otros
@@ -227,7 +190,7 @@ int main(){
 //Métodos
 
 void processInput(GLFWwindow *window){
-	float cameraSpeed = 50. * deltaTime;
+	float cameraSpeed = 100. * deltaTime;
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
@@ -240,42 +203,3 @@ void processInput(GLFWwindow *window){
         cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 }
 
-void mouse_callback(GLFWwindow* window, double xpos, double ypos){
-    if (firstMouse){
-        lastX = xpos;
-        lastY = ypos;
-        firstMouse = false;
-    }
-
-    float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos;
-    lastX = xpos;
-    lastY = ypos;
-
-    float sensitivity = 0.1f;
-    xoffset *= sensitivity;
-    yoffset *= sensitivity;
-
-    yaw += xoffset;
-    pitch += yoffset;
-
-    if (pitch > 89.0f)
-        pitch = 89.0f;
-    if (pitch < -89.0f)
-        pitch = -89.0f;
-
-    glm::vec3 front;
-    front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-    front.y = sin(glm::radians(pitch));
-    front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-    cameraFront = glm::normalize(front);
-}
-
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
-    if (fov >= 1.0f && fov <= 45.0f)
-        fov -= yoffset;
-    if (fov <= 1.0f)
-        fov = 1.0f;
-    if (fov >= 45.0f)
-        fov = 45.0f;
-}

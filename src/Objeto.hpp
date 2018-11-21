@@ -15,8 +15,8 @@ class Objeto{
         btDefaultMotionState* objMotionState;
 
     public:
-        Objeto();
         Objeto(char* PATH, btVector3 posicionInicial, btScalar masa, bool estatico);
+        void showObject(btTransform trans);
         btRigidBody* objBody;
 };
 

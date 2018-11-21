@@ -1,9 +1,5 @@
 #include "Objeto.hpp"
 
-Objeto::Objeto(){
-
-}
-
 Objeto::Objeto(char* PATH, btVector3 posicionInicial, btScalar masa, bool estatico){
     if (estatico) this->objShape = load_mesh_point_static(PATH);
     else this->objShape = load_mesh_point(PATH);    
@@ -18,4 +14,8 @@ Objeto::Objeto(char* PATH, btVector3 posicionInicial, btScalar masa, bool estati
     btRigidBody::btRigidBodyConstructionInfo objInfo(this->objMass, this->objMotionState, this->objShape, this->localInertiaObj);
     objBody = new btRigidBody(objInfo);
     objBody->setActivationState(DISABLE_DEACTIVATION);
+}
+
+void Objeto::showObject(btTransform trans){
+    this->objBody->getMotionState()->getWorldTransform(trans);
 }
