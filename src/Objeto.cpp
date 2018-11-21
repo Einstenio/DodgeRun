@@ -16,6 +16,9 @@ Objeto::Objeto(char* PATH, btVector3 posicionInicial, btScalar masa){
     objBody->setActivationState(DISABLE_DEACTIVATION);
 }
 
-void Objeto::showObject(btTransform trans){
+void Objeto::showObject(btTransform trans, mat4 aux, malla *model, int location){
     this->objBody->getMotionState()->getWorldTransform(trans);
+    trans.getOpenGLMatrix(&aux[0][0]);
+    model->setModelMatrix(aux);
+    model->draw(location);
 }
