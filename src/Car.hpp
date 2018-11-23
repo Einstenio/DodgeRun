@@ -10,7 +10,7 @@ class Car : public Objeto{
         bool isAlive;
 
     public:
-        Car(char* PATH, btVector3 posicionInicial, btScalar masa, btDynamicsWorld* dynamicsWorld);
+        Car(btVector3 posicionInicial, btDynamicsWorld* dynamicsWorld);
         void setHeart(int heart);
         int getHeart();
         void setGasoline(int gasoline);

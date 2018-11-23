@@ -1,6 +1,9 @@
 #include "Car.hpp"
 
-Car::Car(char* PATH, btVector3 posicionInicial, btScalar masa, btDynamicsWorld* dynamicsWorld) : Objeto(PATH, posicionInicial, masa, dynamicsWorld){
+char* PATH = (char*)"mallas/car/car.obj";
+btScalar MASS = btScalar(1300.);
+
+Car::Car(btVector3 posicionInicial, btDynamicsWorld* dynamicsWorld) : Objeto(PATH, posicionInicial, MASS, dynamicsWorld){
 	this->heart = 3;
 	this->gasoline = 100;
 	this->isAlive = true;

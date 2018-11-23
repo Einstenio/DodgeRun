@@ -94,7 +94,7 @@ int main(){
 	//Creación de Cuerpos con Clase Objeto
 
 	Objeto *carretera = new Objeto((char*)"mallas/highway/highway.obj", btVector3(0, -7, -115), btScalar(0.), mundo->getDynamicsWorld());
-	Car *automovil = new Car((char*)"mallas/car/car.obj", btVector3(0, 15, -1), btScalar(1300.), mundo->getDynamicsWorld());
+	Car *automovil = new Car(btVector3(0, 15, -1), mundo->getDynamicsWorld());
 	Objeto *piedra00 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(15, -5, -40), btScalar(0.), mundo->getDynamicsWorld());
 	Objeto *caja00 = new Objeto((char*)"mallas/box/box.obj", btVector3(0, 20, -20), btScalar(10.), mundo->getDynamicsWorld());
 	Objeto *caja01 = new Objeto((char*)"mallas/box/box.obj", btVector3(-3, 30, -40), btScalar(10.), mundo->getDynamicsWorld());
