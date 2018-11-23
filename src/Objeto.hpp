@@ -22,6 +22,7 @@ class Objeto{
         Objeto(char* PATH, btVector3 posicionInicial, btScalar masa);
         Objeto(char* PATH, btVector3 posicionInicial, btScalar masa, btDynamicsWorld* dynamicsWorld);
         void showObject(btTransform trans, mat4 aux, malla *model, int location);
+        void setVelocity(btVector3 speed);
         btRigidBody* objBody;
 };
 

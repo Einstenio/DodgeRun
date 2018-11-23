@@ -39,3 +39,7 @@ void Objeto::showObject(btTransform trans, mat4 aux, malla *model, int location)
     model->setModelMatrix(aux);
     model->draw(location);
 }
+
+void Objeto::setVelocity(btVector3 speed){
+    objBody->setLinearVelocity(speed);
+}

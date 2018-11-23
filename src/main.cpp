@@ -45,7 +45,7 @@ void processInput(GLFWwindow *window);
 
 glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f, 10.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f, 0.0f);
+glm::vec3 cameraUp    = glm::vec3(0.0f,10.0f, 0.0f);
 
 bool firstMouse = true;
 float yaw   = -90.0f;
@@ -69,7 +69,7 @@ int main(){
 		VERTEX_SHADER_FILE, FRAGMENT_SHADER_FILE
 	);
 
-    glm::mat4 projection = glm::perspective(glm::radians(fov), (float)g_gl_width / (float)g_gl_height, 0.1f, 100.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(fov), (float)g_gl_width / (float)g_gl_height, 0.1f, 1000.0f);
     glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
 	int view_mat_location = glGetUniformLocation (shader_programme, "view");
@@ -93,7 +93,7 @@ int main(){
 
 	//Creación de Cuerpos con Clase Objeto
 
-	Objeto *carretera = new Objeto((char*)"mallas/highway/highway.obj", btVector3(0, -7, -115), btScalar(0.), mundo->getDynamicsWorld());
+	Objeto *carretera = new Objeto((char*)"mallas/highway/highway.obj", btVector3(0, -5, -100), btScalar(0.), mundo->getDynamicsWorld());
 	Car *automovil = new Car(btVector3(0, 15, -1), mundo->getDynamicsWorld());
 	Objeto *piedra00 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(15, -5, -40), btScalar(0.), mundo->getDynamicsWorld());
 	Objeto *caja00 = new Objeto((char*)"mallas/box/box.obj", btVector3(0, 20, -20), btScalar(10.), mundo->getDynamicsWorld());
@@ -139,6 +139,13 @@ int main(){
 		caja04->showObject(trans, aux, box, model_mat_location);
 		caja05->showObject(trans, aux, box, model_mat_location);
 
+		//Mover Auto
+
+		if (glfwGetKey(g_window, GLFW_KEY_W) == GLFW_PRESS) automovil->setVelocity(btVector3(0,0,-5));
+		if (glfwGetKey(g_window, GLFW_KEY_S) == GLFW_PRESS) automovil->setVelocity(btVector3(0,0,5));
+		if (glfwGetKey(g_window, GLFW_KEY_A) == GLFW_PRESS) automovil->setVelocity(btVector3(-5,0,0));
+		if (glfwGetKey(g_window, GLFW_KEY_D) == GLFW_PRESS) automovil->setVelocity(btVector3(5,0,0));
+
 		//Otros
 
         glfwSwapBuffers(g_window);
@@ -158,13 +165,12 @@ void processInput(GLFWwindow *window){
 	float cameraSpeed = 100. * deltaTime;
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
         cameraPos += cameraSpeed * cameraFront;
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
         cameraPos -= cameraSpeed * cameraFront;
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
         cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
         cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 }
-
