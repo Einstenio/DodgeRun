@@ -6,8 +6,8 @@
 #include <glm/vec3.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <bullet/btBulletDynamicsCommon.h>
-#include "Car.hpp"
 #include "Objeto.hpp"
+#include "Car.hpp"
 using namespace glm;
 
 class World{
@@ -21,6 +21,8 @@ class World{
     public:
         World();
         void addObject(Objeto *obj);
+        void addObject(btRigidBody *obj);
+        btDiscreteDynamicsWorld* getDynamicsWorld();
 };
 
 #endif
