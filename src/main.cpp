@@ -19,10 +19,10 @@
 #include "gl_utils.h"
 #include "tools.hpp"
 #include "malla.h"
+#include "World.hpp"
 #include "Objeto.hpp"
 #include "Car.hpp"
 #include "GLDebugDrawer.hpp"
-#include "World.hpp"
 using namespace glm;
 
 //Constantes
@@ -93,32 +93,15 @@ int main(){
 
 	//Creación de Cuerpos con Clase Objeto
 
-	Objeto *carretera = new Objeto((char*)"mallas/highway/highway.obj", btVector3(0, -7, -115), btScalar(0.));
-	mundo->addObject(carretera);
-
-	Car *automovil = new Car((char*)"mallas/car/car.obj", btVector3(0, 15, -1), btScalar(1300.));
-	mundo->addObject(automovil);
-
-	Objeto *piedra00 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(15, -5, -40), btScalar(0.));
-	mundo->addObject(piedra00);
-
-	Objeto *caja00 = new Objeto((char*)"mallas/box/box.obj", btVector3(0, 20, -20), btScalar(10.));
-	mundo->addObject(caja00);
-
-	Objeto *caja01 = new Objeto((char*)"mallas/box/box.obj", btVector3(-3, 30, -40), btScalar(10.));
-	mundo->addObject(caja01);
-
-	Objeto *caja02 = new Objeto((char*)"mallas/box/box.obj", btVector3(5, 10, -60), btScalar(10.));
-	mundo->addObject(caja02);
-
-	Objeto *caja03 = new Objeto((char*)"mallas/box/box.obj", btVector3(-3, 40, -80), btScalar(10.));
-	mundo->addObject(caja03);
-
-	Objeto *caja04 = new Objeto((char*)"mallas/box/box.obj", btVector3(0, 80, -100), btScalar(10.));
-	mundo->addObject(caja04);
-
-	Objeto *caja05 = new Objeto((char*)"mallas/box/box.obj", btVector3(1, 70, -120), btScalar(10.));
-	mundo->addObject(caja05);
+	Objeto *carretera = new Objeto((char*)"mallas/highway/highway.obj", btVector3(0, -7, -115), btScalar(0.), mundo->getDynamicsWorld());
+	Car *automovil = new Car((char*)"mallas/car/car.obj", btVector3(0, 15, -1), btScalar(1300.), mundo->getDynamicsWorld());
+	Objeto *piedra00 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(15, -5, -40), btScalar(0.), mundo->getDynamicsWorld());
+	Objeto *caja00 = new Objeto((char*)"mallas/box/box.obj", btVector3(0, 20, -20), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja01 = new Objeto((char*)"mallas/box/box.obj", btVector3(-3, 30, -40), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja02 = new Objeto((char*)"mallas/box/box.obj", btVector3(5, 10, -60), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja03 = new Objeto((char*)"mallas/box/box.obj", btVector3(-3, 40, -80), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja04 = new Objeto((char*)"mallas/box/box.obj", btVector3(0, 80, -100), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja05 = new Objeto((char*)"mallas/box/box.obj", btVector3(1, 70, -120), btScalar(10.), mundo->getDynamicsWorld());
 
 	//Otros
 
@@ -130,6 +113,7 @@ int main(){
 
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
+		if (deltaTime < 0.0166) continue;
         lastFrame = currentFrame;
         processInput(g_window);
         glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
@@ -139,6 +123,7 @@ int main(){
         glUniformMatrix4fv (proj_mat_location, 1, GL_FALSE, &projection[0][0]);
         view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 	    glUniformMatrix4fv(view_mat_location, 1, GL_FALSE, &view[0][0]);
+		mundo->getDynamicsWorld()->stepSimulation(1/60.f, 10);
 
         btTransform trans;
 

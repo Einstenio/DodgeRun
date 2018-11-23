@@ -1,6 +1,6 @@
 #include "Car.hpp"
 
-Car::Car(char* PATH, btVector3 posicionInicial, btScalar masa) : Objeto(PATH, posicionInicial, masa){
+Car::Car(char* PATH, btVector3 posicionInicial, btScalar masa, btDynamicsWorld* dynamicsWorld) : Objeto(PATH, posicionInicial, masa, dynamicsWorld){
 	this->heart = 3;
 	this->gasoline = 100;
 	this->isAlive = true;
@@ -38,5 +38,3 @@ void Car::setSpeed(float speed){
 float Car::getSpeed(){
 	return speed;
 }
-
-/* http://isaaclacoba.github.io/tinman/posts/creando-coche/creando-coches-para-el-juego.html */
