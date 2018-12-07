@@ -17,7 +17,6 @@ void World::addObject(btRigidBody *obj){
     dynamicsWorld->addRigidBody(obj);
 }
 
-
 btDiscreteDynamicsWorld* World::getDynamicsWorld(){
     return dynamicsWorld;
 }

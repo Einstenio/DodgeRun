@@ -1,17 +1,3 @@
-/******************************************************************************\
-| OpenGL 4 Example Code.                                                       |
-| Accompanies written series "Anton's OpenGL 4 Tutorials"                      |
-| Email: anton at antongerdelan dot net                                        |
-| First version 27 Jan 2014                                                    |
-| Copyright Dr Anton Gerdelan, Trinity College Dublin, Ireland.                |
-| See individual libraries separate legal notices                              |
-|******************************************************************************|
-| This is just a file holding some commonly-used "utility" functions to keep   |
-| the main file a bit easier to read. You can might build up something like    |
-| this as learn more GL. Note that you don't need much code here to do good GL.|
-| If you have a big object-oriented engine then maybe you can ask yourself if  |
-| it is really making life easier.                                             |
-\******************************************************************************/
 #include "gl_utils.h"
 #include <stdio.h>
 #include <time.h>
@@ -20,7 +6,6 @@
 #define GL_LOG_FILE "log/gl.log"
 #define MAX_SHADER_LENGTH 262144
 
-/*--------------------------------LOG FUNCTIONS-------------------------------*/
 bool restart_gl_log () {
 	FILE* file = fopen (GL_LOG_FILE, "w");
 	if (!file) {
@@ -56,7 +41,6 @@ bool gl_log (const char* message, ...) {
 	return true;
 }
 
-/* same as gl_log except also prints to stderr */
 bool gl_log_err (const char* message, ...) {
 	va_list argptr;
 	FILE* file = fopen (GL_LOG_FILE, "a");
@@ -78,7 +62,6 @@ bool gl_log_err (const char* message, ...) {
 	return true;
 }
 
-/*--------------------------------GLFW3 and GLEW------------------------------*/
 bool start_gl () {
 	gl_log ("starting GLFW %s", glfwGetVersionString ());
 	
@@ -88,8 +71,6 @@ bool start_gl () {
 		return false;
 	}
 
-	/* We must specify 3.2 core if on Apple OS X -- other O/S can specify
-	 anything here. I defined 'APPLE' in the makefile for OS X */
 #ifdef APPLE
 	glfwWindowHint (GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint (GLFW_CONTEXT_VERSION_MINOR, 2);
@@ -97,15 +78,7 @@ bool start_gl () {
 	glfwWindowHint (GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 #endif
 
-	/*GLFWmonitor* mon = glfwGetPrimaryMonitor ();
-	const GLFWvidmode* vmode = glfwGetVideoMode (mon);
-	g_window = glfwCreateWindow (
-		vmode->width, vmode->height, "Extended GL Init", mon, NULL
-	);*/
-
-	g_window = glfwCreateWindow (
-		g_gl_width, g_gl_height, "Extended Init.", NULL, NULL
-	);
+	g_window = glfwCreateWindow (g_gl_width, g_gl_height, "Extended Init.", NULL, NULL);
 	if (!g_window) {
 		fprintf (stderr, "ERROR: could not open window with GLFW3\n");
 		glfwTerminate();
@@ -113,20 +86,14 @@ bool start_gl () {
 	}
 	glfwSetWindowSizeCallback (g_window, glfw_window_size_callback);
 	glfwMakeContextCurrent (g_window);
-	
 	glfwWindowHint (GLFW_SAMPLES, 4);
-	
-	// start GLEW extension handler
 	glewExperimental = GL_TRUE;
 	glewInit ();
-
-	// get version info
-	const GLubyte* renderer = glGetString (GL_RENDERER); // get renderer string
-	const GLubyte* version = glGetString (GL_VERSION); // version as a string
+	const GLubyte* renderer = glGetString (GL_RENDERER);
+	const GLubyte* version = glGetString (GL_VERSION);
 	printf ("Renderer: %s\n", renderer);
 	printf ("OpenGL version supported %s\n", version);
 	gl_log ("renderer: %s\nversion: %s\n", renderer, version);
-	
 	return true;
 }
 
@@ -134,12 +101,11 @@ void glfw_error_callback (int error, const char* description) {
 	fputs (description, stderr);
 	gl_log_err ("%s\n", description);
 }
-// a call-back function
+
 void glfw_window_size_callback (GLFWwindow* window, int width, int height) {
 	g_gl_width = width;
 	g_gl_height = height;
 	printf ("width %i height %i\n", width, height);
-	/* update any perspective matrices used here */
 }
 
 void _update_fps_counter (GLFWwindow* window) {
@@ -158,10 +124,7 @@ void _update_fps_counter (GLFWwindow* window) {
 	frame_count++;
 }
 
-/*-----------------------------------SHADERS----------------------------------*/
-bool parse_file_into_str (
-	const char* file_name, char* shader_str, int max_len
-) {
+bool parse_file_into_str (const char* file_name, char* shader_str, int max_len) {
 	shader_str[0] = '\0'; // reset string
 	FILE* file = fopen (file_name , "r");
 	if (!file) {
@@ -207,13 +170,12 @@ bool create_shader (const char* file_name, GLuint* shader, GLenum type) {
 	const GLchar* p = (const GLchar*)shader_string;
 	glShaderSource (*shader, 1, &p, NULL);
 	glCompileShader (*shader);
-	// check for compile errors
 	int params = -1;
 	glGetShaderiv (*shader, GL_COMPILE_STATUS, &params);
 	if (GL_TRUE != params) {
 		gl_log_err ("ERROR: GL shader index %i did not compile\n", *shader);
 		print_shader_info_log (*shader);
-		return false; // or exit or something
+		return false;
 	}
 	gl_log ("shader compiled. index %i\n", *shader);
 	return true;
@@ -251,7 +213,6 @@ bool create_programme (GLuint vert, GLuint frag, GLuint* programme) {
 	);
 	glAttachShader (*programme, vert);
 	glAttachShader (*programme, frag);
-	// link the shader programme. if binding input attributes do that before link
 	glLinkProgram (*programme);
 	GLint params = -1;
 	glGetProgramiv (*programme, GL_LINK_STATUS, &params);
@@ -264,15 +225,12 @@ bool create_programme (GLuint vert, GLuint frag, GLuint* programme) {
 		return false;
 	}
 	assert (is_programme_valid (*programme));
-	// delete shaders here to free memory
 	glDeleteShader (vert);
 	glDeleteShader (frag);
 	return true;
 }
 
-GLuint create_programme_from_files (
-	const char* vert_file_name, const char* frag_file_name
-) {
+GLuint create_programme_from_files (const char* vert_file_name, const char* frag_file_name) {
 	GLuint vert, frag, programme;
 	assert (create_shader (vert_file_name, &vert, GL_VERTEX_SHADER));
 	assert (create_shader (frag_file_name, &frag, GL_FRAGMENT_SHADER));

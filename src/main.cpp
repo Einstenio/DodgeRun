@@ -86,10 +86,12 @@ int main(){
 
 	//Creación de Figuras
 
-	malla *box = new malla((char*)"mallas/box/box.obj");
-	malla *highway = new malla((char*)"mallas/highway/highway.obj");
-	malla *car = new malla((char*)"mallas/car/car.obj");
-	malla *rock = new malla((char*)"mallas/rock/rock.obj");
+	malla *box = new malla((char*)"mallas/box/box.obj", shader_programme);
+    box->load_texture("mallas/box/box.jpg");
+
+	malla *highway = new malla((char*)"mallas/highway/highway.obj", shader_programme);
+	malla *car = new malla((char*)"mallas/car/car.obj", shader_programme);
+	malla *rock = new malla((char*)"mallas/rock/rock.obj", shader_programme);
 
 	//Creación de Cuerpos con Clase Objeto
 
