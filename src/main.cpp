@@ -87,9 +87,11 @@ int main(){
 	//Creación de Figuras
 
 	malla *box = new malla((char*)"mallas/box/box.obj", shader_programme);
-    box->load_texture("mallas/box/box.jpg");
+    box->load_texture("mallas/box/woodbox.jpg");
 
 	malla *highway = new malla((char*)"mallas/highway/highway.obj", shader_programme);
+	highway->load_texture("mallas/highway/highway.jpg");
+
 	malla *car = new malla((char*)"mallas/car/car.obj", shader_programme);
 	malla *rock = new malla((char*)"mallas/rock/rock.obj", shader_programme);
 
@@ -130,6 +132,11 @@ int main(){
         btTransform trans;
 
 		//Visualización de Objetos en la pantalla
+
+		highway->reset_matrix();
+		highway->draw(model_mat_location);
+		box->reset_matrix();
+		box->draw(model_mat_location);
 
 		carretera->showObject(trans, aux, highway, model_mat_location);
 		automovil->showObject(trans, aux, car, model_mat_location);
