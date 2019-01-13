@@ -1,7 +1,7 @@
-GL_LOG_FILE log. local time Tue Dec 11 12:23:11 2018
+GL_LOG_FILE log. local time Sun Jan 13 23:20:12 2019
 
-starting GLFW 3.1.2 X11 GLX clock_gettime /dev/js XI Xf86vm sharedrenderer: GeForce GTX 1060 6GB/PCIe/SSE2
-version: 4.6.0 NVIDIA 396.54
+starting GLFW 3.2.1 X11 GLX EGL clock_gettime /dev/js Xf86vm sharedrenderer: Mesa DRI Intel(R) HD Graphics 520 (Skylake GT2) 
+version: 3.0 Mesa 18.0.0-rc5
 creating shader from shaders/test_vs.glsl...
 shader compiled. index 1
 creating shader from shaders/test_fs.glsl...
