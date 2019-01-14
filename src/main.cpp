@@ -132,11 +132,10 @@ int main(){
 	malla *highway = new malla((char*)"mallas/highway/highway.obj", shader_programme);
 	highway->load_texture("mallas/highway/highway.jpg");
 
-	malla *arena = new malla((char*)"mallas/highway/highway.obj", shader_programme);
+	malla *arena = new malla((char*)"mallas/arena/arena.obj", shader_programme);
 	arena->load_texture("mallas/arena/arena.jpg");
 
 	malla *car = new malla((char*)"mallas/car/car.obj", shader_programme);
-	//arena->load_texture("mallas/arena/arena.jpg");
 
 	malla *rock = new malla((char*)"mallas/rock/rock.obj", shader_programme);
 	
@@ -146,8 +145,18 @@ int main(){
 	Objeto *carretera0 = new Objeto((char*)"mallas/highway/highway.obj", btVector3(0, -5, -100), btScalar(0.), mundo->getDynamicsWorld());
 	Objeto *carretera1 = new Objeto((char*)"mallas/highway/highway.obj", btVector3(0, -5, -349.3), btScalar(0.), mundo->getDynamicsWorld());
 	Objeto *carretera2 = new Objeto((char*)"mallas/highway/highway.obj", btVector3(0, -5, -598.6), btScalar(0.), mundo->getDynamicsWorld());
+	Objeto *carretera3 = new Objeto((char*)"mallas/highway/highway.obj", btVector3(0, -5, -847.9), btScalar(0.), mundo->getDynamicsWorld());
 	Car *automovil = new Car(btVector3(0, -3, -1), mundo->getDynamicsWorld());
-	Objeto *piedra00 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(15, -5, -40), btScalar(0.), mundo->getDynamicsWorld());
+
+	Objeto *piedra00 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(0, -3, -715), btScalar(0.), mundo->getDynamicsWorld());
+	Objeto *piedra01 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(6, -3, -715), btScalar(0.), mundo->getDynamicsWorld());
+	Objeto *piedra02 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(-6, -3, -715), btScalar(0.), mundo->getDynamicsWorld());
+	Objeto *piedra03 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(0, 0, -715), btScalar(0.), mundo->getDynamicsWorld());
+	Objeto *piedra04 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(6, 0, -715), btScalar(0.), mundo->getDynamicsWorld());
+	Objeto *piedra05 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(-6, 0, -715), btScalar(0.), mundo->getDynamicsWorld());
+	Objeto *piedra06 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(-3, -1.5, -715), btScalar(0.), mundo->getDynamicsWorld());
+	Objeto *piedra07 = new Objeto((char*)"mallas/rock/rock.obj", btVector3(3, -1.5, -715), btScalar(0.), mundo->getDynamicsWorld());
+
 
   	Objeto *arena00 = new Objeto((char*)"mallas/highway/highway.obj", btVector3(-23, -3, -100), btScalar(0.), mundo->getDynamicsWorld());
 	Objeto *arena01 = new Objeto((char*)"mallas/highway/highway.obj", btVector3(-23, -3, -349.3), btScalar(0.), mundo->getDynamicsWorld());
@@ -155,43 +164,45 @@ int main(){
 	Objeto *arena03 = new Objeto((char*)"mallas/highway/highway.obj", btVector3(23, -3, -100), btScalar(0.), mundo->getDynamicsWorld());
 	Objeto *arena04 = new Objeto((char*)"mallas/highway/highway.obj", btVector3(23, -3, -349.3), btScalar(0.), mundo->getDynamicsWorld());
 	Objeto *arena05 = new Objeto((char*)"mallas/highway/highway.obj", btVector3(23, -3, -598.6), btScalar(0.), mundo->getDynamicsWorld());
+	Objeto *arena06 = new Objeto((char*)"mallas/highway/highway.obj", btVector3(-23, -3, -847.9), btScalar(0.), mundo->getDynamicsWorld());
+	Objeto *arena07 = new Objeto((char*)"mallas/highway/highway.obj", btVector3(23, -3, -847.9), btScalar(0.), mundo->getDynamicsWorld());
 
 	srand(time(NULL));
 	//(xyz)
 	
-	Objeto *caja01 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 30, -40), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja02 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 10, -60), btScalar(10.), mundo->getDynamicsWorld());
+	//Objeto *caja01 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 10, -40), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja02 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 20, -60), btScalar(10.), mundo->getDynamicsWorld());
 	Objeto *caja03 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 40, -80), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja04 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 80, -100), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja05 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -440), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja06 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -120), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja07 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -140), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja08 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -160), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja09 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -180), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja10 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -200), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja11 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -220), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja12 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -240), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja13 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -260), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja14 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -280), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja15 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -300), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja16 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -320), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja17 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -340), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja18 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -360), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja19 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -380), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja20 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -400), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja21 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -420), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja22 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -440), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja23 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -460), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja24 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -480), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja25 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -500), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja26 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -520), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja27 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -540), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja28 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -560), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja29 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -580), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja30 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -600), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja31 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -620), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja32 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -640), btScalar(10.), mundo->getDynamicsWorld());
-	Objeto *caja33 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 70, -660), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja04 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 60, -100), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja05 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 80, -440), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja06 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 100, -120), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja07 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 120, -140), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja08 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 140, -160), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja09 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 160, -180), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja10 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 180, -200), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja11 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 200, -220), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja12 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 220, -240), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja13 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 240, -260), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja14 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 260, -280), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja15 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 280, -300), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja16 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 300, -320), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja17 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 320, -340), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja18 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 340, -360), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja19 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 360, -380), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja20 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 380, -400), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja21 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 400, -420), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja22 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 420, -440), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja23 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 440, -460), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja24 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 460, -480), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja25 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 480, -500), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja26 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 500, -520), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja27 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 520, -540), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja28 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 540, -560), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja29 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 560, -580), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja30 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 580, -600), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja31 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 600, -620), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja32 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 620, -640), btScalar(10.), mundo->getDynamicsWorld());
+	Objeto *caja33 = new Objeto((char*)"mallas/box/box.obj", btVector3(rand() % (16)-8, 640, -660), btScalar(10.), mundo->getDynamicsWorld());
 
 	
 //Skybox
@@ -288,7 +299,15 @@ int main(){
 		arena->draw(model_mat_location);
 
 		automovil->showObject(trans, aux, car, model_mat_location);
+
 		piedra00->showObject(trans, aux, rock, model_mat_location);
+		piedra01->showObject(trans, aux, rock, model_mat_location);
+		piedra02->showObject(trans, aux, rock, model_mat_location);
+		piedra03->showObject(trans, aux, rock, model_mat_location);
+		piedra04->showObject(trans, aux, rock, model_mat_location);
+		piedra05->showObject(trans, aux, rock, model_mat_location);
+		piedra06->showObject(trans, aux, rock, model_mat_location);
+		piedra07->showObject(trans, aux, rock, model_mat_location);
 
 		arena00->showObject(trans, aux, arena, model_mat_location);
 		arena01->showObject(trans, aux, arena, model_mat_location);
@@ -296,10 +315,15 @@ int main(){
 		arena03->showObject(trans, aux, arena, model_mat_location);
 		arena04->showObject(trans, aux, arena, model_mat_location);
 		arena05->showObject(trans, aux, arena, model_mat_location);
+		arena06->showObject(trans, aux, arena, model_mat_location);
+		arena07->showObject(trans, aux, arena, model_mat_location);
+
 		carretera0->showObject(trans, aux, highway, model_mat_location);
 		carretera1->showObject(trans, aux, highway, model_mat_location);
 		carretera2->showObject(trans, aux, highway, model_mat_location);
-		caja01->showObject(trans, aux, box, model_mat_location);
+		carretera3->showObject(trans, aux, highway, model_mat_location);
+
+		//caja01->showObject(trans, aux, box, model_mat_location);
 		caja02->showObject(trans, aux, box, model_mat_location);
 		caja03->showObject(trans, aux, box, model_mat_location);
 		caja04->showObject(trans, aux, box, model_mat_location);
@@ -383,20 +407,19 @@ bool processInput(GLFWwindow *window, Car *automovil, bool avanza){
 		avanza=true;
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS && avanza==false){
-		automovil->setVelocity(btVector3(-10,0,-30));
+		automovil->setVelocity(btVector3(-15,0,-30));
 		lugar=lugar+30;
        	//cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 		//cameraPos += cameraSpeed * cameraFront;
 	}
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS && avanza==false){
-		automovil->setVelocity(btVector3(10,0,-30));
+		automovil->setVelocity(btVector3(15,0,-30));
 		lugar=lugar+30;
        	//cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 		//cameraPos += cameraSpeed * cameraFront;
 	}
 	if(lugar>=57570){
-
+		glfwSetWindowShouldClose(window, true);
 	}
-	printf("%i\n", lugar);
 	return avanza;
 }
